@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import axios from 'axios'
+import { API_BASE_URL } from '../../config/api'
 import StaffDetails from '../StaffDetails'
 
 jest.mock('axios')
@@ -210,7 +211,7 @@ describe('StaffDetails Component', () => {
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalledWith(
-        'http://localhost:3000/api/staff/staff123/weekly-stats',
+        `${API_BASE_URL}/api/staff/staff123/weekly-stats`,
         {
           headers: {
             'Authorization': 'Bearer mock-token'

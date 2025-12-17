@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, LogIn } from 'lucide-react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 import './LoginCard.css'
 
 function LoginCard() {
@@ -83,7 +84,7 @@ function LoginCard() {
     console.log('Sending payload:', JSON.stringify(payload))
 
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/login', payload, {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, payload, {
         headers: {
           'Content-Type': 'application/json'
         }

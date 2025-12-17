@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import axios from 'axios'
+import { API_BASE_URL } from '../../config/api'
 import ApplyLeaveModal from '../ApplyLeaveModal'
 
 jest.mock('axios')
@@ -105,7 +106,7 @@ describe('ApplyLeaveModal Component', () => {
 
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith(
-        'http://localhost:3000/api/attendance/leave',
+        `${API_BASE_URL}/api/attendance/leave`,
         {
           staffId: mockStaff._id,
           date: expect.any(String),

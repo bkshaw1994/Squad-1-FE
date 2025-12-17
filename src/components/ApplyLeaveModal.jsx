@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X } from 'lucide-react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 import './Modal.css'
 
 function ApplyLeaveModal({ show, onClose, staff, onSuccess }) {
@@ -18,7 +19,7 @@ function ApplyLeaveModal({ show, onClose, staff, onSuccess }) {
       setLoading(true)
       const token = localStorage.getItem('token')
       await axios.post(
-        `http://localhost:3000/api/attendance/leave`,
+        `${API_BASE_URL}/api/attendance/leave`,
         {
           staffId: staff._id,
           date: leaveDate,

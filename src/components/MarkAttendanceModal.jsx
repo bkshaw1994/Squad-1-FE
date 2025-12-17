@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X } from 'lucide-react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 import './Modal.css'
 
 function MarkAttendanceModal({ show, onClose, staff, onSuccess }) {
@@ -12,7 +13,7 @@ function MarkAttendanceModal({ show, onClose, staff, onSuccess }) {
       setLoading(true)
       const token = localStorage.getItem('token')
       await axios.post(
-        `http://localhost:3000/api/attendance/mark`,
+        `${API_BASE_URL}/api/attendance/mark`,
         {
           staffId: staff._id,
           date: attendanceDate,

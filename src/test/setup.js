@@ -13,9 +13,22 @@ afterEach(() => {
   jest.clearAllMocks()
 })
 
-// Mock window.alert and window.confirm
-global.alert = jest.fn()
-global.confirm = jest.fn()
+// Mock environment variables
+process.env.VITE_API_BASE_URL = 'http://localhost:3000'
+
+// Mock import.meta for Vite environment variables
+global.import = {
+  meta: {
+    env: {
+      VITE_API_BASE_URL: 'http://localhost:3000'
+    }
+  }
+}
+
+// Mock the API config module
+jest.mock('../config/api', () => ({
+  API_BASE_URL: 'http://localhost:3000'
+}))
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {

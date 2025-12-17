@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 import './Modal.css'
 
 function EditStaffModal({ show, onClose, staff, onSuccess }) {
@@ -24,7 +25,7 @@ function EditStaffModal({ show, onClose, staff, onSuccess }) {
       setLoading(true)
       const token = localStorage.getItem('token')
       await axios.put(
-        `http://localhost:3000/api/staff/${staff._id}`,
+        `${API_BASE_URL}/api/staff/${staff._id}`,
         {
           date: formData.date,
           shift: formData.shift.charAt(0).toUpperCase() + formData.shift.slice(1)

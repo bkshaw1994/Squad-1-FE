@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X, Calendar, Clock, User } from 'lucide-react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 import './Modal.css'
 
 function AddStaffModal({ show, onClose, onSuccess }) {
@@ -35,7 +36,7 @@ function AddStaffModal({ show, onClose, onSuccess }) {
       console.log('Sending payload:', payload)
       
       const response = await axios.post(
-        'http://localhost:3000/api/staff',
+        `${API_BASE_URL}/api/staff`,
         payload,
         {
           headers: {

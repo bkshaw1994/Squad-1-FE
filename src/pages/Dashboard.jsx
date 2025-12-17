@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LogOut, Users, Search, Loader2, Edit, Trash2, CheckCircle, AlertTriangle, UserPlus } from 'lucide-react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 import EditStaffModal from '../components/EditStaffModal'
 import AddStaffModal from '../components/AddStaffModal'
 import './Dashboard.css'
@@ -23,7 +24,7 @@ function Dashboard() {
   const fetchStaffs = useCallback(async (token) => {
     try {
       setLoading(true)
-      let url = `http://localhost:3000/api/staff?date=${selectedDate}`
+      let url = `${API_BASE_URL}/api/staff?date=${selectedDate}`
       if (selectedShift) {
         // Capitalize first letter for camel casing
         const formattedShift = selectedShift.charAt(0).toUpperCase() + selectedShift.slice(1)
