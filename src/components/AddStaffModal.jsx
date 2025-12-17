@@ -41,8 +41,10 @@ function AddStaffModal({ show, onClose, onSuccess }) {
         {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          timeout: 10000
         }
       )
       
@@ -60,7 +62,27 @@ function AddStaffModal({ show, onClose, onSuccess }) {
     } catch (err) {
       console.error('Error adding staff:', err)
       console.error('Error response:', err.response?.data)
-      alert(`Failed to add staff: ${err.response?.data?.error || err.response?.data?.message || err.message}`)
+      console.error('Error status:', err.response?.status)
+      
+      let errorMessage = 'Failed to add staff'
+      
+      if (err.code === 'NETWORK_ERROR' || err.message.includes('Network Error')) {
+        errorMessage = 'Network error: Cannot connect to server. Please check your internet connection.'
+      } else if (err.code === 'ECONNABORTED') {
+        errorMessage = 'Request timeout: Server took too long to respond.'
+      } else if (err.response) {
+        if (err.response.status === 0) {
+          errorMessage = 'CORS error: Server blocked the request. Please contact support.'
+        } else if (err.response.status === 401) {
+          errorMessage = 'Authentication error: Please log in again.'
+        } else {
+          errorMessage = `Server error: ${err.response.data?.error || err.response.data?.message || err.response.status}`
+        }
+      } else if (err.request) {
+        errorMessage = 'Cannot connect to server. The server may be down or there may be a network issue.'
+      }
+      
+      alert(errorMessage)
     } finally {
       setLoading(false)
     }

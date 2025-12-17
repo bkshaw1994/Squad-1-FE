@@ -84,10 +84,13 @@ function LoginCard() {
     console.log('Sending payload:', JSON.stringify(payload))
 
     try {
+      console.log('Making API call to:', `${API_BASE_URL}/api/auth/login`)
       const response = await axios.post(`${API_BASE_URL}/api/auth/login`, payload, {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        timeout: 10000 // 10 second timeout
       })
 
       console.log('Full API Response:', response)
@@ -126,15 +129,26 @@ function LoginCard() {
       // Handle errors
       console.error('Login error:', err)
       console.error('Error response:', err.response?.data)
-      if (err.response) {
+      console.error('Error status:', err.response?.status)
+      console.error('Error headers:', err.response?.headers)
+      
+      if (err.code === 'NETWORK_ERROR' || err.message.includes('Network Error')) {
+        setError('Network error: Cannot connect to server. Please check your internet connection.')
+      } else if (err.code === 'ECONNABORTED') {
+        setError('Request timeout: Server took too long to respond.')
+      } else if (err.response) {
         // Server responded with error
-        setError(err.response.data.message || 'Invalid username or password')
+        if (err.response.status === 0) {
+          setError('CORS error: Server blocked the request. Please contact support.')
+        } else {
+          setError(err.response.data.message || `Server error: ${err.response.status}`)
+        }
       } else if (err.request) {
         // Request made but no response
-        setError('Cannot connect to server. Please try again.')
+        setError('Cannot connect to server. The server may be down or there may be a network issue.')
       } else {
         // Other errors
-        setError('An error occurred. Please try again.')
+        setError('An unexpected error occurred. Please try again.')
       }
     } finally {
       setLoading(false)
