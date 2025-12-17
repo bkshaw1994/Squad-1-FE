@@ -22,7 +22,7 @@ const corsOptions = {
   origin: [
     'http://localhost:3000',           // Local development
     'http://localhost:5173',           // Vite dev server
-    '', // Replace with your actual deployed domain
+    'https://red-pebble-03589a91e.3.azurestaticapps.net', // Replace with your actual deployed domain
     'https://your-frontend.vercel.app', // If using Vercel
     'https://your-frontend.netlify.app' // If using Netlify
   ],

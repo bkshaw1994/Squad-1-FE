@@ -1,5 +1,7 @@
 // API configuration
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'
+export const API_BASE_URL = import.meta.env.VITE_USE_LOCAL_API === 'true'
+  ? 'http://localhost:3000'
+  : (import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000')
 
 // CORS troubleshooting helper
 export const checkCORSConfiguration = async () => {
