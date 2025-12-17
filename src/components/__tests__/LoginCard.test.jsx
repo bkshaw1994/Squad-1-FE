@@ -67,7 +67,13 @@ describe('LoginCard Component', () => {
       expect(axios.post).toHaveBeenCalledWith(
         `${API_BASE_URL}/api/auth/login`,
         { userName: 'johndoe', password: 'password123' },
-        { headers: { 'Content-Type': 'application/json' } }
+        { 
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          timeout: 10000
+        }
       )
       expect(localStorage.getItem('token')).toBe('mock-token-123')
       expect(localStorage.getItem('user')).toBeTruthy()

@@ -239,7 +239,7 @@ describe('Dashboard Component', () => {
     }, { timeout: 2000 })
     
     // Check that error message is displayed
-    expect(screen.getByText('Failed to load staff data')).toBeInTheDocument()
+    expect(screen.getByText('An unexpected error occurred while loading staff data.')).toBeInTheDocument()
   })
 
   it('refreshes data after successful edit', async () => {
