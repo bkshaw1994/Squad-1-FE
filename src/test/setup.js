@@ -27,7 +27,8 @@ global.import = {
 
 // Mock the API config module
 jest.mock('../config/api', () => ({
-  API_BASE_URL: 'http://localhost:3000'
+  API_BASE_URL: 'http://localhost:3000',
+  checkCORSConfiguration: jest.fn().mockResolvedValue(true)
 }))
 
 // Mock IntersectionObserver

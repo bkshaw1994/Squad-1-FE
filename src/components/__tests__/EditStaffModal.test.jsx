@@ -5,6 +5,12 @@ import EditStaffModal from '../EditStaffModal'
 
 jest.mock('axios')
 
+// Mock alert using Object.defineProperty
+Object.defineProperty(window, 'alert', {
+  value: jest.fn(),
+  writable: true,
+})
+
 describe('EditStaffModal Component', () => {
   const mockStaff = {
     _id: 'staff123',

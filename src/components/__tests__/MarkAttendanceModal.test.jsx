@@ -5,6 +5,12 @@ import MarkAttendanceModal from '../MarkAttendanceModal'
 
 jest.mock('axios')
 
+// Mock alert using Object.defineProperty
+Object.defineProperty(window, 'alert', {
+  value: jest.fn(),
+  writable: true,
+})
+
 describe('MarkAttendanceModal Component', () => {
   const mockStaff = {
     _id: 'staff123',

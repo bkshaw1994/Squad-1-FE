@@ -86,7 +86,7 @@ function Dashboard() {
       console.error('Error response:', err.response?.data)
       console.error('Error status:', err.response?.status)
       
-      if (err.code === 'NETWORK_ERROR' || err.message.includes('Network Error')) {
+      if (err.code === 'NETWORK_ERROR' || (err.message && err.message.includes('Network Error'))) {
         setError('Network error: Cannot connect to server. Please check your internet connection.')
       } else if (err.code === 'ECONNABORTED') {
         setError('Request timeout: Server took too long to respond.')

@@ -5,6 +5,12 @@ import ApplyLeaveModal from '../ApplyLeaveModal'
 
 jest.mock('axios')
 
+// Mock alert using Object.defineProperty
+Object.defineProperty(window, 'alert', {
+  value: jest.fn(),
+  writable: true,
+})
+
 describe('ApplyLeaveModal Component', () => {
   const mockStaff = {
     _id: 'staff123',
