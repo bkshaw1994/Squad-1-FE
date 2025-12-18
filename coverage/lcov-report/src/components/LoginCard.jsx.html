@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.95% </span>
+                <span class="strong">81.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>73/88</span>
+                <span class='fraction'>79/97</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.43% </span>
+                <span class="strong">76.36% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>37/46</span>
+                <span class='fraction'>42/55</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.95% </span>
+                <span class="strong">81.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>73/88</span>
+                <span class='fraction'>79/97</span>
             </div>
         
             
@@ -314,7 +314,21 @@
 <a name='L249'></a><a href='#L249'>249</a>
 <a name='L250'></a><a href='#L250'>250</a>
 <a name='L251'></a><a href='#L251'>251</a>
-<a name='L252'></a><a href='#L252'>252</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -401,6 +415,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -443,8 +460,19 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -651,10 +679,13 @@ function LoginCard() {
     console.log('Sending payload:', JSON.stringify(payload))
 &nbsp;
     try {
+      console.log('Making API call to:', `${API_BASE_URL}/api/auth/login`)
       const response = await axios.post(`${API_BASE_URL}/api/auth/login`, payload, {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        timeout: 10000 // 10 second timeout
       })
 &nbsp;
       console.log('Full API Response:', response)
@@ -693,15 +724,26 @@ function LoginCard() {
       // Handle errors
       console.error('Login error:', err)
       console.error('Error response:', err.response?.data)
-      if (err.response) {
+      console.error('Error status:', err.response?.status)
+      console.error('Error headers:', err.response?.headers)
+      
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err.code === 'NETWORK_ERROR' || (err.message &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >err.message.includes('Network Error'))</span>) {
+<span class="cstat-no" title="statement not covered" >        setError('Network error: Cannot connect to server. Please check your internet connection.')</span>
+      } else <span class="missing-if-branch" title="if path not taken" >I</span>if (err.code === 'ECONNABORTED') {
+<span class="cstat-no" title="statement not covered" >        setError('Request timeout: Server took too long to respond.')</span>
+      } else if (err.response) {
         // Server responded with error
-        setError(err.response.data.message || <span class="branch-1 cbranch-no" title="branch not covered" >'Invalid username or password')</span>
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (err.response.status === 0) {
+<span class="cstat-no" title="statement not covered" >          setError('CORS error: Server blocked the request. Please contact support.')</span>
+        } else {
+          setError(err.response.data.message || <span class="branch-1 cbranch-no" title="branch not covered" >`Server error: ${err.response.status}`)</span>
+        }
       } else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>if (err.request) {</span>
         // Request made but no response
-<span class="cstat-no" title="statement not covered" >        setError('Cannot connect to server. Please try again.')</span>
+<span class="cstat-no" title="statement not covered" >        setError('Cannot connect to server. The server may be down or there may be a network issue.')</span>
       } else {
         // Other errors
-<span class="cstat-no" title="statement not covered" >        setError('An error occurred. Please try again.')</span>
+<span class="cstat-no" title="statement not covered" >        setError('An unexpected error occurred. Please try again.')</span>
       }
     } finally {
       setLoading(false)
@@ -823,7 +865,7 @@ export default LoginCard
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-12-17T22:44:25.037Z
+                at 2025-12-18T01:05:14.362Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

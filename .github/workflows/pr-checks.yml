@@ -1,4 +1,4 @@
-name: PR Checks (Lint & Tests)
+name: PR Checks (Lint, Tests & Coverage)
 
 on:
   pull_request:
@@ -25,5 +25,5 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Run Tests
-        run: npm run test
+      - name: Run Tests with Coverage
+        run: npm run test:ci
