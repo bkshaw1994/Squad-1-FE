@@ -66,7 +66,7 @@ function AddStaffModal({ show, onClose, onSuccess }) {
       
       let errorMessage = 'Failed to add staff'
       
-      if (err.code === 'NETWORK_ERROR' || err.message.includes('Network Error')) {
+      if (err.code === 'NETWORK_ERROR' || (err.message && err.message.includes('Network Error'))) {
         errorMessage = 'Network error: Cannot connect to server. Please check your internet connection.'
       } else if (err.code === 'ECONNABORTED') {
         errorMessage = 'Request timeout: Server took too long to respond.'
