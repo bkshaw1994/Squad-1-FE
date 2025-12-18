@@ -62,29 +62,32 @@ function EditStaffModal({ show, onClose, staff, onSuccess }) {
             <label>Staff Name</label>
             <input type="text" value={staff?.name || ''} disabled className="form-input" />
           </div>
-          <div className="form-group">
-            <label>Date</label>
-            <input
-              type="date"
-              value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-              min={new Date().toISOString().split('T')[0]}
-              className="form-input"
-            />
+          <div className='sameLabel'>
+            <div className="form-group sameCl">
+              <label>Date</label>
+              <input
+                type="date"
+                value={formData.date}
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                min={new Date().toISOString().split('T')[0]}
+                className="form-input"
+              />
+            </div>
+            <div className="form-group sameCl">
+              <label>Shift</label>
+              <select
+                value={formData.shift}
+                onChange={(e) => setFormData({ ...formData, shift: e.target.value })}
+                className="form-input"
+              >
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+                <option value="night">Night</option>
+              </select>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Shift</label>
-            <select
-              value={formData.shift}
-              onChange={(e) => setFormData({ ...formData, shift: e.target.value })}
-              className="form-input"
-            >
-              <option value="morning">Morning</option>
-              <option value="afternoon">Afternoon</option>
-              <option value="evening">Evening</option>
-              <option value="night">Night</option>
-            </select>
-          </div>
+          
         </div>
         <div className="modal-footer">
           <button className="btn-cancel" onClick={onClose} disabled={loading}>
