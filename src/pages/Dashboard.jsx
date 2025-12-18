@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LogOut, Users, Search, Loader2, Edit, Trash2, CheckCircle, AlertTriangle, UserPlus } from 'lucide-react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 import EditStaffModal from '../components/EditStaffModal'
 import AddStaffModal from '../components/AddStaffModal'
 import './Dashboard.css'
@@ -23,7 +24,7 @@ function Dashboard() {
   const fetchStaffs = useCallback(async (token) => {
     try {
       setLoading(true)
-      let url = `http://localhost:3000/api/staff?date=${selectedDate}`
+      let url = `${API_BASE_URL}/api/staff?date=${selectedDate}`
       if (selectedShift) {
         // Capitalize first letter for camel casing
         const formattedShift = selectedShift.charAt(0).toUpperCase() + selectedShift.slice(1)
@@ -31,8 +32,11 @@ function Dashboard() {
       }
       const response = await axios.get(url, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        timeout: 10000
       })
       console.log('Staff API response:', response.data)
       
@@ -79,7 +83,26 @@ function Dashboard() {
       }
     } catch (err) {
       console.error('Error fetching staff:', err)
-      setError('Failed to load staff data')
+      console.error('Error response:', err.response?.data)
+      console.error('Error status:', err.response?.status)
+      
+      if (err.code === 'NETWORK_ERROR' || err.message.includes('Network Error')) {
+        setError('Network error: Cannot connect to server. Please check your internet connection.')
+      } else if (err.code === 'ECONNABORTED') {
+        setError('Request timeout: Server took too long to respond.')
+      } else if (err.response) {
+        if (err.response.status === 0) {
+          setError('CORS error: Server blocked the request. Please contact support.')
+        } else if (err.response.status === 401) {
+          setError('Authentication error: Please log in again.')
+        } else {
+          setError(`Server error: ${err.response.data?.message || err.response.status}`)
+        }
+      } else if (err.request) {
+        setError('Cannot connect to server. The server may be down or there may be a network issue.')
+      } else {
+        setError('An unexpected error occurred while loading staff data.')
+      }
       setStaffs([]) // Set empty array on error
     } finally {
       setLoading(false)

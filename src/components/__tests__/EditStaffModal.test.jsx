@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import axios from 'axios'
+import { API_BASE_URL } from '../../config/api'
 import EditStaffModal from '../EditStaffModal'
 
 jest.mock('axios')
@@ -133,7 +134,7 @@ describe('EditStaffModal Component', () => {
 
     await waitFor(() => {
       expect(axios.put).toHaveBeenCalledWith(
-        `http://localhost:3000/api/staff/${mockStaff._id}`,
+        `${API_BASE_URL}/api/staff/${mockStaff._id}`,
         {
           date: expect.any(String),
           shift: 'Afternoon'
