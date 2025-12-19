@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X, Calendar, Clock, User } from 'lucide-react'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { API_BASE_URL } from '../config/api'
 import './Modal.css'
 
@@ -49,7 +50,7 @@ function AddStaffModal({ show, onClose, onSuccess }) {
       )
       
       console.log('Response:', response.data)
-      alert('Staff added successfully!')
+      toast.success('Staff added successfully!')
       setFormData({
         name: '',
         email: '',
@@ -82,7 +83,9 @@ function AddStaffModal({ show, onClose, onSuccess }) {
         errorMessage = 'Cannot connect to server. The server may be down or there may be a network issue.'
       }
       
-      alert(errorMessage)
+      toast.error(
+        err.response?.data?.message || errorMessage
+      )
     } finally {
       setLoading(false)
     }

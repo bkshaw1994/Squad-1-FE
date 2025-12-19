@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { API_BASE_URL } from '../config/api'
 import './Modal.css'
 
@@ -36,12 +37,14 @@ function EditStaffModal({ show, onClose, staff, onSuccess }) {
           }
         }
       )
-      alert('Staff schedule updated successfully')
+      toast.success('Staff schedule updated successfully')
       onSuccess()
       onClose()
     } catch (err) {
       console.error('Error updating staff:', err)
-      alert('Failed to update staff schedule')
+      toast.error(
+        err.response?.data?.message || 'Failed to update staff schedule'
+      )
     } finally {
       setLoading(false)
     }

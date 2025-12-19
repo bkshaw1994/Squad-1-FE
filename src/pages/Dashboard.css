@@ -335,6 +335,19 @@
   background-color: #d1fae5;
   color: #065f46;
 }
+/* Row turns red when staff is on leave */
+.leave-row {
+  background-color: #fee2e2; /* light red */
+}
+
+.leave-row:hover {
+  background-color: #fecaca;
+}
+
+.leave-row td {
+  color: #7f1d1d;
+  font-weight: 500;
+}
 /* Staff Table */
 .table-container {
   background-color: white;
@@ -359,6 +372,9 @@
   color: #1f2937;
   margin: 0;
 }
+
+
+
 
 .search-box {
   position: relative;
@@ -415,6 +431,9 @@
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
+
+
+
 
 /* Loading and Error States */
 .loading-container,
@@ -555,6 +574,8 @@
   background-color: #f3f4f6;
   color: #1f2937;
 }
+
+
 
 /* Attendance Badge */
 .staff-attendance {
@@ -843,4 +864,55 @@
   .search-input {
     width: 100%;
   }
+  .add-staff-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 500;
+  font-size: small;
+}
+.filter-controls {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .search-box {
+    width: 100%;
+    position: relative;
+  }
+
+  .search-input {
+    width: 78%;
+    font-size: 0.9rem;
+    padding: 0.50rem 0.75rem 0.65rem 2.5rem;
+  }
+
+  .search-icon {
+    left: 0.75rem;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .filter-dropdown {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  outline: none;
+  background-color: white;
+  color: #1f2937;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 120px;
+}
 }

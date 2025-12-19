@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { ArrowLeft, Calendar, Clock, FileText, CheckCircle } from 'lucide-react'
 import axios from 'axios'
-import { API_BASE_URL } from '../config/api'
 import MarkAttendanceModal from '../components/MarkAttendanceModal'
 import ApplyLeaveModal from '../components/ApplyLeaveModal'
 import './StaffDetails.css'
@@ -21,7 +20,7 @@ function StaffDetails() {
       setLoading(true)
       const token = localStorage.getItem('token')
       const response = await axios.get(
-        `${API_BASE_URL}/api/staff/${staff._id}/weekly-stats`,
+        `http://localhost:3000/api/staff/${staff._id}/weekly-stats`,
         {
           headers: {
             'Authorization': `Bearer ${token}`

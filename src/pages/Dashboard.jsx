@@ -177,8 +177,13 @@ function Dashboard() {
     )
   }
 
+  
+
+
+
   return (
     <div className="dashboard-container">
+      
       {/* Header */}
       <header className="dashboard-header">
         <div className="header-content">
@@ -262,7 +267,7 @@ function Dashboard() {
             </div>
           )}
         </div>
-
+      
         {/* Staff Table */}
         <div className="table-container">
           <div className="table-header">
@@ -333,7 +338,8 @@ function Dashboard() {
                 <tbody>
                   {filteredStaffs.map((staff, index) => {
                     return (
-                      <tr key={staff.id || index}>
+                      <tr key={staff.id || index} >
+                        
                         <td className="staff-id">{staff.staffId || staff.id || index + 1}</td>
                         <td>
                           <div className="staff-name-cell">

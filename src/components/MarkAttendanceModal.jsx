@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { X } from 'lucide-react'
+import { toast } from 'react-toastify'
 import axios from 'axios'
 import { API_BASE_URL } from '../config/api'
 import './Modal.css'
@@ -25,12 +26,14 @@ function MarkAttendanceModal({ show, onClose, staff, onSuccess }) {
           }
         }
       )
-      alert('Attendance marked successfully')
+      toast.success('Attendance marked successfully')
       onSuccess()
       onClose()
     } catch (err) {
       console.error('Error marking attendance:', err)
-      alert('Failed to mark attendance')
+      toast.error(
+        err.response?.data?.message || 'Failed to mark attendance'
+      )
     } finally {
       setLoading(false)
     }

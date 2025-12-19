@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {  toast } from 'react-toastify'
 import { X } from 'lucide-react'
 import axios from 'axios'
 import { API_BASE_URL } from '../config/api'
@@ -11,7 +12,7 @@ function ApplyLeaveModal({ show, onClose, staff, onSuccess }) {
 
   const handleSubmit = async () => {
     if (!leaveReason.trim()) {
-      alert('Please enter a reason for leave')
+      toast.error('Please enter a reason for leave')
       return
     }
 
@@ -31,13 +32,15 @@ function ApplyLeaveModal({ show, onClose, staff, onSuccess }) {
           }
         }
       )
-      alert('Leave applied successfully')
+      toast.success('Leave applied successfully')
       setLeaveReason('')
       onSuccess()
       onClose()
     } catch (err) {
       console.error('Error applying leave:', err)
-      alert('Failed to apply leave')
+      toast.error(
+        err.response?.data?.message || 'Failed to apply leave'
+      )
     } finally {
       setLoading(false)
     }
