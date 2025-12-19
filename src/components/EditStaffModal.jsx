@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { API_BASE_URL } from '../config/api'
 import './Modal.css'
 
@@ -36,12 +37,14 @@ function EditStaffModal({ show, onClose, staff, onSuccess }) {
           }
         }
       )
-      alert('Staff schedule updated successfully')
+      toast.success('Staff schedule updated successfully')
       onSuccess()
       onClose()
     } catch (err) {
       console.error('Error updating staff:', err)
-      alert('Failed to update staff schedule')
+      toast.error(
+        err.response?.data?.message || 'Failed to update staff schedule'
+      )
     } finally {
       setLoading(false)
     }
@@ -63,29 +66,32 @@ function EditStaffModal({ show, onClose, staff, onSuccess }) {
             <label>Staff Name</label>
             <input type="text" value={staff?.name || ''} disabled className="form-input" />
           </div>
-          <div className="form-group">
-            <label>Date</label>
-            <input
-              type="date"
-              value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-              min={new Date().toISOString().split('T')[0]}
-              className="form-input"
-            />
+          <div className='sameLabel'>
+            <div className="form-group sameCl">
+              <label>Date</label>
+              <input
+                type="date"
+                value={formData.date}
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                min={new Date().toISOString().split('T')[0]}
+                className="form-input"
+              />
+            </div>
+            <div className="form-group sameCl">
+              <label>Shift</label>
+              <select
+                value={formData.shift}
+                onChange={(e) => setFormData({ ...formData, shift: e.target.value })}
+                className="form-input"
+              >
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+                <option value="night">Night</option>
+              </select>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Shift</label>
-            <select
-              value={formData.shift}
-              onChange={(e) => setFormData({ ...formData, shift: e.target.value })}
-              className="form-input"
-            >
-              <option value="morning">Morning</option>
-              <option value="afternoon">Afternoon</option>
-              <option value="evening">Evening</option>
-              <option value="night">Night</option>
-            </select>
-          </div>
+          
         </div>
         <div className="modal-footer">
           <button className="btn-cancel" onClick={onClose} disabled={loading}>

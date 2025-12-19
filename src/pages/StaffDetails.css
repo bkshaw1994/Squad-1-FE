@@ -19,6 +19,20 @@
   align-items: center;
   gap: 1.5rem;
 }
+.leave-row {
+  background-color: #fee2e2;      /* light red */
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+
+.leave-row .info-label {
+  color: #7f1d1d;
+}
+
+.leave-row .info-value {
+  font-weight: 600;
+}
+
 
 .back-button {
   display: flex;

@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Google Sans"', 'ui-sans-serif', 'system-ui'],
+      },
       animation: {
         'spin-slow': 'spin 20s linear infinite',
         'float': 'float 6s ease-in-out infinite',
@@ -14,8 +17,8 @@ export default {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-20px)' },
-        }
-      }
+        },
+      },
     },
   },
   plugins: [],

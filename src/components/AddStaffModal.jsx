@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X, Calendar, Clock, User } from 'lucide-react'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { API_BASE_URL } from '../config/api'
 import './Modal.css'
 
@@ -49,7 +50,7 @@ function AddStaffModal({ show, onClose, onSuccess }) {
       )
       
       console.log('Response:', response.data)
-      alert('Staff added successfully!')
+      toast.success('Staff added successfully!')
       setFormData({
         name: '',
         email: '',
@@ -82,7 +83,9 @@ function AddStaffModal({ show, onClose, onSuccess }) {
         errorMessage = 'Cannot connect to server. The server may be down or there may be a network issue.'
       }
       
-      alert(errorMessage)
+      toast.error(
+        err.response?.data?.message || errorMessage
+      )
     } finally {
       setLoading(false)
     }
@@ -95,7 +98,7 @@ function AddStaffModal({ show, onClose, onSuccess }) {
       <div className="modal-content">
         <div className="modal-header">
           <h2>Add New Staff</h2>
-          <button className="close-btn" onClick={onClose}>
+          <button className="modal-close" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
@@ -111,7 +114,7 @@ function AddStaffModal({ show, onClose, onSuccess }) {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Enter staff name"
-                required
+                required className="form-input"
               />
             </div>
 
@@ -121,61 +124,68 @@ function AddStaffModal({ show, onClose, onSuccess }) {
                 Email
               </label>
               <input
-                type="email"
+                type="email" className="form-input"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="Enter email"
               />
             </div>
+            
+            <div className='sameLabel'>
+              <div className="form-group sameCl">
+                <label className="form-label">
+                  <User size={16} />
+                  Role
+                </label>
+                <select
+                  value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                  required className="form-input"
+                >
+                  <option value="">Select Role</option>
+                  <option value="Doctor">Doctor</option>
+                  <option value="Nurse">Nurse</option>
+                  <option value="Technician">Technician</option>
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label className="form-label">
-                <User size={16} />
-                Role
-              </label>
-              <select
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                required
-              >
-                <option value="">Select Role</option>
-                <option value="Doctor">Doctor</option>
-                <option value="Nurse">Nurse</option>
-                <option value="Technician">Technician</option>
-              </select>
-            </div>
+              <div className="form-group sameCl">
+                <label className="form-label">
+                  <Calendar size={16} />
+                  Start Date
+                </label>
+                <input
+                  type="date" className="form-input"
+                  value={formData.date}
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  min={new Date().toISOString().split('T')[0]}
+                  required
+                />
+              </div>
 
-            <div className="form-group">
-              <label className="form-label">
-                <Calendar size={16} />
-                Start Date
-              </label>
-              <input
-                type="date"
-                value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                min={new Date().toISOString().split('T')[0]}
-                required
-              />
+              <div className="form-group sameCl">
+                <label className="form-label">
+                  <Clock size={16} />
+                  Shift
+                </label>
+                <select
+                  value={formData.shift}
+                  onChange={(e) => setFormData({ ...formData, shift: e.target.value })}
+                  required className="form-input"
+                >
+                  <option value="">Select Shift</option>
+                  <option value="morning">Morning</option>
+                  <option value="afternoon">Afternoon</option>
+                  <option value="evening">Evening</option>
+                  <option value="night">Night</option>
+                </select>
+              </div>
             </div>
+           
 
-            <div className="form-group">
-              <label className="form-label">
-                <Clock size={16} />
-                Shift
-              </label>
-              <select
-                value={formData.shift}
-                onChange={(e) => setFormData({ ...formData, shift: e.target.value })}
-                required
-              >
-                <option value="">Select Shift</option>
-                <option value="morning">Morning</option>
-                <option value="afternoon">Afternoon</option>
-                <option value="evening">Evening</option>
-                <option value="night">Night</option>
-              </select>
-            </div>
+          
+
+           
           </div>
           <div className="modal-footer">
             <button type="button" className="btn-secondary" onClick={onClose}>

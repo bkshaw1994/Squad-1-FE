@@ -252,7 +252,7 @@ function LoginCard() {
       <div className="create-account-card">
         <button
           type="button"
-          onClick={() => window.location.href = '#'}
+          onClick={() => window.location.href = '/signUp'}
           className="create-account-button"
         >
           Create new account
